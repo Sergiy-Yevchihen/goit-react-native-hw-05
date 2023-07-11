@@ -1,7 +1,7 @@
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import Navigation from "./src/Screens/Navigation/Navigation";
+import Navigation from "./src/Screens/Navigation/AppNavigation";
 
 export default function App() {
   return (

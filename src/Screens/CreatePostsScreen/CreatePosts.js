@@ -17,7 +17,7 @@ const trashImg = require("../../Source/trash.png");
 
 const CreatePost = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
-  const [photo, setPhoto] = useState(null);
+  const [photoi, setPhoto] = useState(null);
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState(null);
   const [inputRegion, setInputRegion] = useState("");
@@ -50,48 +50,32 @@ const CreatePost = ({ navigation }) => {
   const active = title && region;
 
   const takePhoto = async () => {
-    console.log("camera----->");
-    if (camera) {
-      console.log("Taking photo...");
-      await camera
-        .takePictureAsync()
-        .then((photo) => {
-          setPhoto(photo.uri);
-          setInputRegion(region[0]?.country + ", " + region[0]?.city);
-        })
-        .catch((error) => {
-          console.log("Error taking picture:", error);
-        });
-    }
+    const photo = await camera.takePictureAsync();
+    setPhoto(photo.uri);
+    setInputRegion(region[0]["country"] + ", " + region[0]["city"]);
   };
 
-  const inputTitle = (text) => {
+  const inputTitlte = (text) => {
     setTitle(text);
   };
 
-  const handleCreate = () => {
-    if (!title || !location || !photo) {
-      alert("Enter all data please!");
+  const hendleCreate = () => {
+    if (!title || !location || !photoi) {
+      alert("Enter all data pleace!!!");
       return;
     }
-    navigation.navigate("PostList", { photo, location, inputRegion, title });
+    navigation.navigate("PostList", { photoi, location, inputRegion, title });
   };
 
   return (
     <View style={styles.postContainer}>
-      <Camera
-        style={styles.postImg}
-        ref={(ref) => setCamera(ref)}
-        onCameraReady={() => console.log("Camera is ready")}
-      >
-        {photo && (
-          <Image
-            source={{ uri: photo }}
-            style={{ height: 220, width: 220, marginTop: -80 }}
-          />
-        )}
-      </Camera>
-
+      <Camera style={styles.postImg} ref={setCamera}>
+        <Image
+          source={{ uri: photoi }}
+          style={{ height: 220, width: 220, marginTop: -80 }}
+        />
+      
+</Camera>
       <TouchableOpacity
         style={styles.postImgAdd}
         activeOpacity={0.5}
@@ -100,24 +84,24 @@ const CreatePost = ({ navigation }) => {
         <FontAwesome name="camera" size={24} color="white" />
       </TouchableOpacity>
 
-      <Text style={styles.postImgText}>Add photo</Text>
+      {/* <Text style={styles.postImgText}>Add photo</Text> */}
       <View style={styles.postForm}>
         <TextInput
           style={styles.postName}
           placeholder="Title..."
           inputMode="text"
-          onChangeText={inputTitle}
+          onChangeText={inputTitlte}
         />
         <TextInput
           style={styles.postName}
           placeholder="Location"
+          inputMode="text"
           value={inputRegion}
-          onChangeText={(text) => setInputRegion(text)}
         />
         <TouchableOpacity
           style={active ? styles.postButtonActive : styles.postButton}
           activeOpacity={0.5}
-          onPress={handleCreate}
+          onPress={hendleCreate}
         >
           <Text style={styles.postButtonText}>Publicate</Text>
         </TouchableOpacity>

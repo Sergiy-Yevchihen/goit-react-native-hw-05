@@ -6,8 +6,20 @@ import PostsNav from "./PostsNav";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
 
 const MainStack = createStackNavigator();
+// const ProfileStack = createStackNavigator();
 
-const Navigation = () => {
+// const ProfileNav = () => {
+//   return (
+//     <ProfileStack.Navigator
+//       initialRouteName="ProfileScreen"
+//       screenOptions={{ headerShown: false }}
+//     >
+//       <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} />
+//     </ProfileStack.Navigator>
+//   );
+// };
+
+const AppNavigation = () => {
   return (
     <MainStack.Navigator
       initialRouteName="Login"
@@ -17,9 +29,10 @@ const Navigation = () => {
       <MainStack.Screen name="Registratione" component={RegistrationScreen} />
       <MainStack.Screen name="Home" component={Home} />
       <MainStack.Screen name="PostsNav" component={PostsNav} />
+      
       <MainStack.Screen name="ProfileScreen" component={ProfileScreen} />
     </MainStack.Navigator>
   );
 };
 
-export default Navigation;
+export default AppNavigation;

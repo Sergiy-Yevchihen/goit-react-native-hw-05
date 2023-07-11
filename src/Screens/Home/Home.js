@@ -1,14 +1,17 @@
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign, SimpleLineIcons, Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 import PostsNav from "../Navigation/PostsNav";
 import PostsScreen from "../PostsScreen/PostsScreen";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
 
 const BottomTabs = createBottomTabNavigator();
 
-const Home = ({ navigation }) => {
+const Home = () => {
+  const navigation = useNavigation();
+
   return (
     <BottomTabs.Navigator
       initialRouteName="Posts"
@@ -20,9 +23,13 @@ const Home = ({ navigation }) => {
       {/* GRID */}
       <BottomTabs.Screen
         options={{
-          tabBarIcon: ({ focused, size, color }) => {
-            return <SimpleLineIcons name="grid" size={20} color={color} />;
-          },
+          tabBarIcon: ({ focused, size, color }) => (
+            <SimpleLineIcons
+              name="grid"
+              size={20}
+              color={focused ? "orange" : color}
+            />
+          ),
           headerTitleAlign: "center",
           headerRightContainerStyle: { paddingRight: 20 },
           headerRight: () => (
@@ -42,30 +49,35 @@ const Home = ({ navigation }) => {
       {/* ADD BUTTON */}
       <BottomTabs.Screen
         options={{
-          tabBarIcon: () => {
-            return (
-              <TouchableOpacity
-                style={styles.addButton}
-                activeOpacity={0.5}
-                onPress={() => navigation.navigate("PostsNav")}
-              >
-                <Text style={styles.addButtonText}>+</Text>
-              </TouchableOpacity>
-            );
-          },
+          tabBarIcon: () => (
+            <TouchableOpacity
+              style={styles.addButton}
+              activeOpacity={0.5}
+              // onPress={() => navigation.navigate("CreatePostsScreen")}
+              onPress={() => navigation.navigate("PostsNav")}
+            >
+              <Text style={styles.addButtonText}>+</Text>
+            </TouchableOpacity>
+          ),
           headerShown: false,
-          tabBarStyle: { display: "none" },
+           tabBarStyle: { display: "none" },
           headerTitleAlign: "center",
         }}
         name="PostsNav"
         component={PostsNav}
       />
-
+      {/*color={focused ? "orange" : color}  */}
       {/* PROFILE BUTTON */}
       <BottomTabs.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => {
-            return <AntDesign name="user" size={20} color={color} />;
+            return (
+              <AntDesign
+                name="user"
+                size={20}
+                color={focused ? "orange" : color}
+              />
+            );
           },
           headerShown: false,
         }}
